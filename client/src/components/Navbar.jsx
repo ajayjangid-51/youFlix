@@ -8,25 +8,37 @@ import { useSelector } from "react-redux";
 import Upload from "./Upload";
 import { useDispatch } from "react-redux";
 import { logout } from "../redux/userSlice";
-
+import MaterialUisearch from "./MaterialUisearch";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { IconButton } from "@mui/material";
+import { color } from "@mui/system";
+import { pink } from "@mui/material/colors";
+import PermIdentityRoundedIcon from "@mui/icons-material/PermIdentityRounded";
+import PublishRoundedIcon from "@mui/icons-material/PublishRounded";
+import { Avatar } from "@mui/material";
 const Container = styled.div`
 	position: sticky;
 	top: 0;
 	background-color: ${({ theme }) => theme.bgLighter};
-	height: 56px;
+	height: 10vh;
+	display: flex;
+	justify-content: space-between;
 `;
 
 const Wrapper = styled.div`
 	display: flex;
 	align-items: center;
-	justify-content: flex-end;
+	width: 100%;
+	/* justify-content: flex-end; */
+	justify-content: space-between;
 	height: 100%;
-	padding: 0px 20px;
-	position: relative;
+	/* border: 1px solid red; */
+	/* padding: 0px 20px; */
+	/* position: relative; */
 `;
 
 const Search = styled.div`
-	width: 40%;
+	width: 50%;
 	position: absolute;
 	left: 0px;
 	right: 0px;
@@ -68,48 +80,107 @@ const User = styled.div`
 	color: ${({ theme }) => theme.text};
 `;
 
-const Avatar = styled.img`
-	width: 32px;
-	height: 32px;
-	border-radius: 50%;
-	background-color: #999;
-`;
+// const Avatar = styled.img`
+// 	width: 32px;
+// 	height: 32px;
+// 	border-radius: 50%;
+// 	background-color: #999;
+// `;
 
-const Navbar = () => {
+const Navbar = ({ darkMode, setDarkMode }) => {
 	const navigate = useNavigate();
 	const [open, setOpen] = useState(false);
 	const [q, setQ] = useState("");
 	const { currentUser } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
+	const label = { inputProps: { "aria-label": "Size switch demo" } };
 	return (
 		<>
 			<Container>
 				<Wrapper>
-					<Search>
+					{/* <Search> */}
+					<form
+						onSubmit={(e) => {
+							e.preventDefault();
+							navigate(`/search?q=${q}`);
+						}}
+						style={{
+							flex: "1 1 0%",
+							display: "flex",
+							alignItems: "center",
+							padding: "0vh 3vw",
+						}}
+					>
 						<Input
+							style={{
+								flex: "1 1 0%",
+								border: "1px solid rgb(204, 204, 204)",
+								borderRadius: "1.5vh",
+								padding: "1vh 2vw",
+							}}
 							placeholder="Search"
 							onChange={(e) => setQ(e.target.value)}
 						/>
-						<SearchOutlinedIcon onClick={() => navigate(`/search?q=${q}`)} />
-					</Search>
-					{currentUser ? (
-						<User>
-							<VideoCallOutlinedIcon onClick={() => setOpen(true)} />
-							<Avatar src={currentUser.img} />
-							{currentUser.name}
-						</User>
-					) : (
-						<Link to="signin" style={{ textDecoration: "none" }}>
-							<Button>
+						<SearchOutlinedIcon
+							color="secondary"
+							onClick={() => navigate(`/search?q=${q}`)}
+						/>
+					</form>
+					{/* </Search> */}
+					<div
+						style={{
+							display: "flex",
+							padding: "0vh 3vh",
+							alignItems: "center",
+							justifyContent: "space-between",
+						}}
+					>
+						{currentUser ? (
+							<User>
+								{/* <VideoCallOutlinedIcon  />
+							{currentUser.name} */}
+								<IconButton>
+									<PublishRoundedIcon
+										onClick={() => setOpen(true)}
+										sx={{ color: darkMode ? pink[500] : "primary" }}
+									/>
+								</IconButton>
+							</User>
+						) : (
+							<IconButton>
+								<Link to="signin" style={{ textDecoration: "none" }}>
+									{/* <Button>
 								<AccountCircleOutlinedIcon />
 								SIGN IN
-							</Button>
-						</Link>
-					)}
-					<Button onClick={() => dispatch(logout())}>
-						<AccountCircleOutlinedIcon />
-						logout
-					</Button>
+							</Button> */}
+									<PermIdentityRoundedIcon
+										sx={{ color: darkMode ? pink[500] : "primary" }}
+									/>
+								</Link>
+							</IconButton>
+						)}
+
+						<IconButton>
+							<LogoutIcon
+								// color={darkMode ? "disabled" : "secondary"}
+								// sx={darkMode && { color: pink[500] }}
+								sx={{ color: darkMode ? pink[500] : "primary" }}
+								onClick={() => dispatch(logout())}
+								label="logout"
+							/>
+						</IconButton>
+
+						<MaterialUisearch
+							darkMode={darkMode}
+							// sx={darkMode && { color: pink[500] }}
+							// color={darkMode ? "primary" : "disabled"}
+							// color="secondary"
+							setDarkMode={setDarkMode}
+						/>
+						{/* <Avatar /> */}
+						{/* <Avatar src="hoihl"></Avatar> */}
+						<Avatar src={currentUser?.img} />
+					</div>
 				</Wrapper>
 			</Container>
 			{open && <Upload setOpen={setOpen} />}

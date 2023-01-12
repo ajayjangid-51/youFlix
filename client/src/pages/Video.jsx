@@ -18,11 +18,12 @@ import Recommendation from "../components/Recommendation";
 
 const Container = styled.div`
 	display: flex;
-	gap: 24px;
+	/* gap: 24px; */
+	/* border: 2px solid yellow; */
 `;
 
 const Content = styled.div`
-	flex: 5;
+	flex: 3.1;
 `;
 const VideoWrapper = styled.div``;
 
@@ -171,36 +172,39 @@ const Video = () => {
 				<VideoWrapper>
 					<VideoFrame src={currentVideo.videoUrl} controls />
 				</VideoWrapper>
-				<Title>{currentVideo.title}</Title>
-				<Details>
-					<Info>
-						{currentVideo.views} views • {format(currentVideo.createdAt)}
-					</Info>
-					<Buttons>
-						<Button onClick={handleLike}>
-							{currentVideo.likes?.includes(currentUser?._id) ? (
-								<ThumbUpIcon />
-							) : (
-								<ThumbUpOutlinedIcon />
-							)}{" "}
-							{currentVideo.likes?.length}
-						</Button>
-						<Button onClick={handleDislike}>
-							{currentVideo.dislikes?.includes(currentUser?._id) ? (
-								<ThumbDownIcon />
-							) : (
-								<ThumbDownOffAltOutlinedIcon />
-							)}{" "}
-							Dislike
-						</Button>
-						<Button>
-							<ReplyOutlinedIcon /> Share
-						</Button>
-						<Button>
-							<AddTaskOutlinedIcon /> Save
-						</Button>
-					</Buttons>
-				</Details>
+				<div>
+					<Title>{currentVideo.title}</Title>
+					<Details>
+						<Info>
+							{currentVideo.views} views • {format(currentVideo.createdAt)}
+						</Info>
+						<Buttons>
+							<Button onClick={handleLike}>
+								{currentVideo.likes?.includes(currentUser?._id) ? (
+									<ThumbUpIcon />
+								) : (
+									<ThumbUpOutlinedIcon />
+								)}{" "}
+								{currentVideo.likes?.length}
+							</Button>
+							<Button onClick={handleDislike}>
+								{currentVideo.dislikes?.includes(currentUser?._id) ? (
+									<ThumbDownIcon />
+								) : (
+									<ThumbDownOffAltOutlinedIcon />
+								)}{" "}
+								Dislike
+							</Button>
+							<Button>
+								<ReplyOutlinedIcon /> Share
+							</Button>
+							<Button>
+								<AddTaskOutlinedIcon /> Save
+							</Button>
+						</Buttons>
+					</Details>
+				</div>
+
 				<Hr />
 				<Channel>
 					<ChannelInfo>
@@ -220,7 +224,16 @@ const Video = () => {
 				<Hr />
 				<Comments videoId={currentVideo._id} />
 			</Content>
-			<Recommendation tags={currentVideo.tags} />
+			<div
+				className="recomands"
+				style={{
+					flex: "2",
+					display: "flex",
+					// justifyContent: "center",
+				}}
+			>
+				<Recommendation tags={currentVideo.tags} />
+			</div>
 		</Container>
 	);
 };

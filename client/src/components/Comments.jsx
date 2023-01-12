@@ -30,7 +30,7 @@ const Input = styled.input`
 
 const Comments = ({ videoId }) => {
 	const { currentUser } = useSelector((state) => state.user);
-
+	const [cmtt, setcmt] = useState("");
 	const [comments, setComments] = useState([]);
 
 	useEffect(() => {
@@ -49,7 +49,32 @@ const Comments = ({ videoId }) => {
 		<Container>
 			<NewComment>
 				<Avatar src={currentUser?.img} />
-				<Input placeholder="Add a comment..." />
+				<form
+					action="#"
+					onSubmit={(e) => {
+						e.preventDefault();
+						const addComment = async () => {
+							const cmt = {
+								userId: currentUser._id,
+								videoId: videoId,
+								desc: cmtt,
+							};
+							try {
+								const res = await axios.post(`/comments`, cmt);
+								// setComments(res.data);
+								// setcmt(null);
+								setcmt("");
+								setComments([...comments, cmtt]);
+							} catch (err) {}
+						};
+						addComment();
+					}}
+				>
+					<Input
+						placeholder="Add a comment..."
+						onChange={(e) => setcmt(e.target.value)}
+					/>
+				</form>
 			</NewComment>
 			{comments?.map((comment) => (
 				<Comment key={comment._id} comment={comment} />

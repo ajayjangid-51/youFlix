@@ -9,7 +9,9 @@ import {
 import app from "../firebase";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
+import { IconButton } from "@mui/material";
+import { green } from "@mui/material/colors";
 const Container = styled.div`
 	width: 100%;
 	height: 100%;
@@ -25,6 +27,8 @@ const Container = styled.div`
 const Wrapper = styled.div`
 	width: 600px;
 	height: 600px;
+	border-radius: 2vh;
+
 	background-color: ${({ theme }) => theme.bgLighter};
 	color: ${({ theme }) => theme.text};
 	padding: 20px;
@@ -32,9 +36,10 @@ const Wrapper = styled.div`
 	flex-direction: column;
 	gap: 20px;
 	position: relative;
+	z-index: 10000;
 `;
 const Close = styled.div`
-	border: 2px solid red;
+	/* border: 2px solid red; */
 	position: absolute;
 	top: 10px;
 	right: 10px;
@@ -67,6 +72,10 @@ const Button = styled.button`
 	cursor: pointer;
 	background-color: ${({ theme }) => theme.soft};
 	color: ${({ theme }) => theme.textSoft};
+	&:hover {
+		background-color: red;
+		/* color: red; */
+	}
 `;
 const Label = styled.label`
 	font-size: 14px;
@@ -147,16 +156,31 @@ const Upload = ({ setOpen }) => {
 	return (
 		<Container>
 			<Wrapper>
-				<Close onClick={() => setOpen(false)}>X</Close>
-				<Title>Upload a New Video</Title>
-				<Label>Video:</Label>
+				<Close onClick={() => setOpen(false)}>
+					<IconButton>
+						<HighlightOffRoundedIcon />
+					</IconButton>
+				</Close>
+				<Title>Upload New Video</Title>
+				<Label
+					style={{
+						fontWeight: "bold",
+					}}
+					for="uploadvideo"
+				>
+					Video
+				</Label>
 				{videoPerc > 0 ? (
 					"Uploading:" + videoPerc
 				) : (
 					<Input
 						type="file"
 						accept="video/*"
+						id="uploadvideo"
 						onChange={(e) => setVideo(e.target.files[0])}
+						// style={{
+						// 	display: "none",
+						// }}
 					/>
 				)}
 				<Input
@@ -176,13 +200,21 @@ const Upload = ({ setOpen }) => {
 					placeholder="Separate the tags with commas."
 					onChance={handleTags}
 				/>
-				<Label>Image:</Label>
+				<Label
+					for="uploadimage"
+					style={{
+						fontWeight: "bold",
+					}}
+				>
+					Image
+				</Label>
 				{imgPerc > 0 ? (
 					"Uploading:" + imgPerc + "%"
 				) : (
 					<Input
 						type="file"
 						accept="image/*"
+						id="uploadimage"
 						onChange={(e) => setImg(e.target.files[0])}
 					/>
 				)}
