@@ -143,6 +143,7 @@ const Navbar = ({ darkMode, setDarkMode }) => {
 									<PublishRoundedIcon
 										onClick={() => setOpen(true)}
 										sx={{ color: darkMode ? pink[500] : "primary" }}
+										titleAccess="upload video"
 									/>
 								</IconButton>
 							</User>
@@ -155,6 +156,7 @@ const Navbar = ({ darkMode, setDarkMode }) => {
 							</Button> */}
 									<PermIdentityRoundedIcon
 										sx={{ color: darkMode ? pink[500] : "primary" }}
+										titleAccess="signin"
 									/>
 								</Link>
 							</IconButton>
@@ -167,6 +169,7 @@ const Navbar = ({ darkMode, setDarkMode }) => {
 								sx={{ color: darkMode ? pink[500] : "primary" }}
 								onClick={() => dispatch(logout())}
 								label="logout"
+								titleAccess="logout"
 							/>
 						</IconButton>
 
