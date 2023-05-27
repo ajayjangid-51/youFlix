@@ -89,6 +89,7 @@ const SignIn = () => {
 	};
 
 	const signInWithGoogle = async () => {
+		console.log("😶");
 		dispatch(loginStart());
 		signInWithPopup(auth, provider)
 			.then((result) => {

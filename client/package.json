@@ -47,5 +47,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://0.0.0.0:4000/api/"
+  "proxy": "https://youflixbackend-kw3wqopyo-ajayjangid-51.vercel.app/api/"
 }

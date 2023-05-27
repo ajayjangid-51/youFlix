@@ -67,6 +67,7 @@ export const googleAuth = async (req, res, next) => {
 				.json(savedUser._doc);
 		}
 	} catch (err) {
+		console.log("some erroin signin");
 		next(err);
 	}
 };
