@@ -40,7 +40,7 @@ export const getUser = async (req, res, next) => {
 		// const user = await User.findById(req.params.id);
 		const user = await User.find();
 		// res.status(200).json({ ajay: "ajay jangid" });
-		res.status(200).json(user);
+		res.status(200).json({ user });
 	} catch (err) {
 		next(err);
 	}
