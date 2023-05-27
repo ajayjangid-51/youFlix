@@ -38,8 +38,8 @@ export const deleteUser = async (req, res, next) => {
 export const getUser = async (req, res, next) => {
 	try {
 		// const user = await User.findById(req.params.id);
-		// const user = await User.find();
-		const user = { name: "ajay", pro: "coder" };
+		const user = await User.find();
+		// const user = { name: "ajay", pro: "coder" };
 		// res.status(200).json({ ajay: "ajay jangid" });
 		res.status(200).json({ user });
 	} catch (err) {
