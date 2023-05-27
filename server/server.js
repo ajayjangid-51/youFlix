@@ -9,10 +9,13 @@ import cookieParser from "cookie-parser";
 
 const app = express();
 dotenv.config();
+const MONGO_ATLAS =
+	"mongodb+srv://icode511:ch57v3TzccQPU1HD@cluster0.lr8zze5.mongodb.net/";
 
 const connect = () => {
 	mongoose
-		.connect(process.env.MONGO_ATLAS)
+		// .connect(process.env.MONGO_ATLAS)
+		.connect(MONGO_ATLAS)
 		.then(() => {
 			console.log("Connected to DB");
 		})
