@@ -101,6 +101,7 @@ const Upload = ({ setOpen }) => {
 	};
 
 	const uploadFile = (file, urlType) => {
+		console.log("you call me..");
 		const storage = getStorage(app);
 		const fileName = new Date().getTime() + file.name;
 		const storageRef = ref(storage, fileName);
@@ -109,8 +110,10 @@ const Upload = ({ setOpen }) => {
 		uploadTask.on(
 			"state_changed",
 			(snapshot) => {
+				console.log("yes working on uploadTask..");
 				const progress =
 					(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+				console.log(progress);
 				urlType === "imgUrl"
 					? setImgPerc(Math.round(progress))
 					: setVideoPerc(Math.round(progress));
@@ -125,8 +128,11 @@ const Upload = ({ setOpen }) => {
 						break;
 				}
 			},
-			(error) => {},
+			(error) => {
+				console.log("error come.. ⭕", error, "🛞");
+			},
 			() => {
+				console.log("error come..");
 				getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
 					setInputs((prev) => {
 						return { ...prev, [urlType]: downloadURL };
@@ -137,6 +143,7 @@ const Upload = ({ setOpen }) => {
 	};
 
 	useEffect(() => {
+		console.log("yes video state is changed..");
 		video && uploadFile(video, "videoUrl");
 	}, [video]);
 
