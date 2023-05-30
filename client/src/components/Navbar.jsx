@@ -108,17 +108,21 @@ const Navbar = ({ darkMode, setDarkMode }) => {
 							flex: "1 1 0%",
 							display: "flex",
 							alignItems: "center",
-							padding: "0vh 3vw",
+							borderRadius: "1.5vh",
+							padding: "0vh 0.5vw",
+							border: "1px solid rgb(204, 204, 204)",
+							margin: "0vh 3vw",
 						}}
 					>
 						<Input
 							style={{
 								flex: "1 1 0%",
-								border: "1px solid rgb(204, 204, 204)",
+								// border: "1px solid rgb(204, 204, 204)",
 								borderRadius: "1.5vh",
 								padding: "1vh 2vw",
 							}}
 							placeholder="Search"
+							value={q}
 							onChange={(e) => setQ(e.target.value)}
 						/>
 						<SearchOutlinedIcon
@@ -149,7 +153,10 @@ const Navbar = ({ darkMode, setDarkMode }) => {
 							</User>
 						) : (
 							<IconButton>
-								<Link to="signin" style={{ textDecoration: "none" }}>
+								<Link
+									to="signin"
+									style={{ textDecoration: "none", paddingTop: "1vh" }}
+								>
 									{/* <Button>
 								<AccountCircleOutlinedIcon />
 								SIGN IN

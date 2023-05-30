@@ -52,6 +52,11 @@ const Button = styled.button`
 	cursor: pointer;
 	background-color: ${({ theme }) => theme.soft};
 	color: ${({ theme }) => theme.textSoft};
+	&:hover {
+		transform: scale(1.1);
+		transition: transform 1000ms;
+		background-color: #e71f1f;
+	}
 `;
 
 const More = styled.div`

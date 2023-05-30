@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Comment from "./Comment";
@@ -33,15 +33,22 @@ const Comments = ({ videoId }) => {
 	const [cmtt, setcmt] = useState("");
 	const [comments, setComments] = useState([]);
 
+	const comt = useRef("");
+	// comments = comments.reverse();
+
 	useEffect(() => {
 		const fetchComments = async () => {
 			try {
-				const res = await axios.get(`/comments/${videoId}`);
-				setComments(res.data);
-			} catch (err) {}
+				let res = await axios.get(`/comments/${videoId}`);
+				// let arr = res.data;
+				// arr = arr.reverse();
+				setComments(res.data.reverse());
+			} catch (err) {
+				console.log(err);
+			}
 		};
 		fetchComments();
-	}, [videoId]);
+	}, [videoId, comments]);
 
 	//TODO: ADD NEW COMMENT FUNCTIONALITY
 
@@ -50,8 +57,8 @@ const Comments = ({ videoId }) => {
 			<NewComment>
 				<Avatar src={currentUser?.img} />
 				<form
-					action="#"
-					onSubmit={(e) => {
+					// action="#"
+					onSubmit={async (e) => {
 						e.preventDefault();
 						const addComment = async () => {
 							const cmt = {
@@ -60,18 +67,29 @@ const Comments = ({ videoId }) => {
 								desc: cmtt,
 							};
 							try {
+								// console.log("⭕⭕⭕⭕⭕⭕⭕⭕⭕⭕⭕⭕⭕⭕⭕⭕⭕⭕");
+								// console.log(cmt);
 								const res = await axios.post(`/comments`, cmt);
+								// console.log("the response is ", res);
 								// setComments(res.data);
 								// setcmt(null);
+								// setComments([...comments, cmtt]);
+								// console.log(comments.length);
+								setComments([cmtt, ...comments]);
+								// console.log(comments.length);
 								setcmt("");
-								setComments([...comments, cmtt]);
-							} catch (err) {}
+								console.log("finish🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷");
+							} catch (err) {
+								setcmt("");
+								console.log("thecomment err is", err);
+							}
 						};
 						addComment();
 					}}
 				>
 					<Input
 						placeholder="Add a comment..."
+						value={cmtt}
 						onChange={(e) => setcmt(e.target.value)}
 					/>
 				</form>

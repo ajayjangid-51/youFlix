@@ -21,7 +21,7 @@ const Container = styled.div`
 	gap: 10px;
 	/* border: 2px solid red; */
 	&:hover {
-		transform: scale(1.2);
+		transform: scale(1.1);
 		transition: transform 1000ms;
 	}
 `;
